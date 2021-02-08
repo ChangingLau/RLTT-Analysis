@@ -195,7 +195,7 @@ class DoRegression:
                     # the number of x
                     x_no = len(xs)
                     # y train and predict dataframe
-                    temp2["y"] = np.log10(temp2["Axial Resilient Modulus"])
+                    temp2["y"] = np.log10(temp2["Axial Resilient Modulus"]*1000)
                     y_train = temp2["y"].iloc[self.rows_for_train]
                     y_predict = temp2["y"].iloc[self.rows_for_predict]
                     # x train and predict empty dataframes
