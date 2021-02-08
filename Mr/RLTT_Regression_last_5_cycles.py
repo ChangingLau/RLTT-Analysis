@@ -139,6 +139,13 @@ class DoRegression:
         regr.fit(train_x, train_y)
         self.regr_result["coef_"] = regr.coef_
         self.regr_result["intercept_"] = regr.intercept_
+        # determine and append k1
+        # k1 = exp(intercept)/Pa
+        k_temp.append(np.exp(regr.intercept_)/self.pa)
+        # append k2 (k2 = coef_[0]) if it exists
+        # append k3 (k3 = coef_[1])
+        for k_2_3_i in regr.coef_:
+            k_temp.append(k_2_3_i)
         # prediction
         predict_y = regr.predict(check_x)
         self.regr_result["MSE"] = mean_squared_error(check_y, predict_y)
@@ -166,7 +173,7 @@ class DoRegression:
                 # initiate input for calculation
                 input_ = [
                     temp1["Axial Resilient Modulus"], 
-                    temp1["Pressure"], temp1["Cyclic Axial Load"],
+                    temp1["Pressure"], temp1["Cyclic Axial Stress"],
                 ]
                 # temp2 = [theta, tau, theta / pa, sigmaD / pa, tau / pa + 1]
                 temp2 = self.calculation(*input_)
@@ -224,7 +231,10 @@ class DoRegression:
             os.path.join(self.root_path, "RLTT_reg_result.csv", )
         )
         # write log
-        self.writecsv(pd.DataFrame(self.log), "last_5_seq_regr_log.csv", )
+        self.writecsv(
+            pd.DataFrame(self.log), 
+            os.path.join(self.root_path, "RLTT_reg_result.csv", )
+        )
 
 
 # generate file names
