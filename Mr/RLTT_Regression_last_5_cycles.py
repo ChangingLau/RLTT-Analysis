@@ -233,7 +233,7 @@ class DoRegression:
         # write log
         self.writecsv(
             pd.DataFrame(self.log), 
-            os.path.join(self.root_path, "RLTT_reg_result.csv", )
+            os.path.join(self.root_path, "last_5_seq_regr_log.csv", )
         )
 
 
